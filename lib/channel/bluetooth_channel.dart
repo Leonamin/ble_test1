@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ble_test1/ble_device_data.dart';
+import 'package:ble_test1/data/ble_device_data.dart';
 import 'package:ble_test1/value_listener.dart';
 import 'package:flutter/services.dart';
 
@@ -61,8 +61,6 @@ class BluetoothChannel {
         try {
           final res = call.arguments;
           final data = BleDeviceData.fromJson(jsonDecode(res));
-          print('Device Name : ' + data.name);
-
           _scanResultListener.notify(data);
         } catch (e) {
           print(e);
