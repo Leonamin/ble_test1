@@ -18,6 +18,7 @@ import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.reflect.typeOf
 
 const val TAG = "flutter_native"
 
@@ -89,7 +90,7 @@ class BluetoothChannel(private val activity: MainActivity, flutterEngine: Flutte
             object : ScanCallback() {
                 override fun onScanResult(callbackType: Int, result: ScanResult) {
                     val device = result.device
-                    updateScanResult(device.name ?: "Unknown", device.address)
+                    updateScanDevice(device)
                 }
             }
 
@@ -113,9 +114,17 @@ class BluetoothChannel(private val activity: MainActivity, flutterEngine: Flutte
         return isSuccess
     }
 
-    private fun updateScanResult(deviceName: String, deviceAddr: String) {
+    private fun updateScanDevice(device: BluetoothDevice) {
         val gson = Gson()
-        val res = gson.toJson(BleDeviceData(deviceName, deviceAddr))
+        var data = BleDeviceData(
+            device.name,
+            device.address,
+            device.type,
+            device.bondState,
+            device.bluetoothClass.majorDeviceClass,
+            device.bluetoothClass.deviceClass,
+        )
+        val res = gson.toJson(data)
         methodChannel.invokeMethod(METHOD_UPDATE_SCAN_DEVICE, res)
     }
 

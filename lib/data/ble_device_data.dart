@@ -8,10 +8,22 @@ class BleDeviceData {
   String name;
   @JsonKey(name: 'macAddr')
   String macAddr;
+  @JsonKey(name: 'type')
+  int type;
+  @JsonKey(name: 'bondState')
+  int bondState;
+  @JsonKey(name: 'majorClass')
+  int majorCalss;
+  @JsonKey(name: 'deviceClass')
+  int deviceClass;
 
   BleDeviceData({
-    required this.name,
-    required this.macAddr,
+    this.name = 'Unknown',
+    this.macAddr = 'Empty',
+    this.type = -1,
+    this.bondState = -1,
+    this.majorCalss = -1,
+    this.deviceClass = -1,
   });
 
   factory BleDeviceData.fromJson(Map<String, dynamic> json) =>
