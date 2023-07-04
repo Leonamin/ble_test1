@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
       isScanning = true;
       setState(() {});
       scanResultListenerId ??=
-          _bluetoothChannel.addScanResultListener(addDeviceToList);
+          _bluetoothChannel.addScanResultListener(checkDeviceToList);
     });
   }
 
@@ -100,8 +100,33 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void checkDeviceToList(BleDeviceData data) {
+    if (ignoreFilter(data)) return;
+    insertDeviceInfo(data);
+  }
+
+  void addDeviceToList() {}
+
+  void insertDeviceInfo(BleDeviceData data) {
+    final index =
+        _bleDeviceDataList.indexWhere((d) => d.macAddr == data.macAddr);
+    if (index == -1) {
+      setState(() {
+        _bleDeviceDataList.add(data);
+      });
+      return;
+    }
+    setState(() {
+      _bleDeviceDataList[index] = data;
+    });
+  }
+
+  bool ignoreFilter(BleDeviceData data) {
+    if (data.name == 'Unknown' || data.macAddr == 'Empty') return true;
+    return false;
+  }
+
   onTapScan() {
-    _debugPrintStatus();
     if (!canPressButton) return;
     setState(() {
       isWaiting = true;
@@ -127,21 +152,5 @@ class _HomePageState extends State<HomePage> {
     } else {
       return 'Start Scan';
     }
-  }
-
-  _debugPrintStatus() {
-    print('completedInit: $completedInit');
-    print('isWaiting: $isWaiting');
-    print('isScanning: $isScanning');
-    print('canPressButton: $canPressButton');
-    print('canStartScan: $canStartScan');
-    print('canStopScan: $canStopScan');
-  }
-
-  void addDeviceToList(BleDeviceData data) {
-    if (_bleDeviceDataList.any((d) => d.macAddr == data.macAddr)) return;
-    setState(() {
-      _bleDeviceDataList.add(data);
-    });
   }
 }

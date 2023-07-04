@@ -7,6 +7,8 @@ class BleDeviceData(
     var bondState: Int?,
     var majorClass: Int?,
     var deviceClass: Int?,
+    var uuid: String?,
+    var rssi: Int?,
 ) {
 
 }
