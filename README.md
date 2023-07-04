@@ -1,16 +1,4 @@
-# ble_test1
+# Flutter BLE, Bluetooth Test Project
+Flutter의 MethodCall을 활용하여 안드로이드 환경에서 블루투스 기기를 스캔, 스캔 데이터 중 기기 이름, 신호 세기나 iBeacon의 uuid, major, minor 필드 가져오기가 구현되어있습니다.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+권한 검사를 넣지 않아서 수동으로 앱설정에 들어가서 블루투스 권한을 허용해야합니다.
